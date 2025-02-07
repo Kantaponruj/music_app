@@ -30,6 +30,7 @@ class MusicProvider with ChangeNotifier {
 
     try {
       _songs = await _musicService.getSongs();
+      _currentSong = _songs.first;
       debugPrint("Fetched songs: $_songs");
     } catch (e) {
       debugPrint("Error fetching music: $e");

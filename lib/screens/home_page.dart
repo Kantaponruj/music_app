@@ -31,41 +31,38 @@ class _MyHomePageState extends State<HomePage> {
                 color: Colors.white,
               ),
             )
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: musicProvider.songs.length,
-                    itemBuilder: (context, index) {
-                      return SongCardComponent(
-                        trackName: musicProvider.songs[index].title,
-                        artistName: musicProvider.songs[index].artist,
-                        coverUrl: musicProvider.songs[index].coverUrl,
-                        onTapPlay: () async {
-                          await musicProvider
-                              .currentTrack(musicProvider.songs[index]);
-                        },
-                      );
-                    },
-                  ),
-                ),
-                if (musicProvider.currentSong != null)
-                  SlidingUpPanel(
-                    minHeight: 140,
-                    maxHeight: MediaQuery.of(context).size.height - 80,
-                    panel: TrackPage(),
-                    collapsed: Container(
+          : SlidingUpPanel(
+              minHeight: 140,
+              maxHeight: MediaQuery.of(context).size.height - 80,
+              panel: TrackPage(),
+              collapsed: musicProvider.currentSong != null
+                  ? Container(
                       height: 200.0,
                       padding: EdgeInsets.only(bottom: 20.0),
                       color: secondaryBackgrondColor,
                       child: PlayingCard(),
-                    ),
-                    body: Center(
-                      child:
-                          Text("This is the Widget behind the sliding panel"),
+                    )
+                  : SizedBox.shrink(),
+              body: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: musicProvider.songs.length,
+                      itemBuilder: (context, index) {
+                        return SongCardComponent(
+                          trackName: musicProvider.songs[index].title,
+                          artistName: musicProvider.songs[index].artist,
+                          coverUrl: musicProvider.songs[index].coverUrl,
+                          onTapPlay: () async {
+                            await musicProvider
+                                .currentTrack(musicProvider.songs[index]);
+                          },
+                        );
+                      },
                     ),
                   ),
-              ],
+                ],
+              ),
             ),
     );
   }
