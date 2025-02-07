@@ -23,11 +23,11 @@ flutter run
 #### Build APK file app
 
 ```
-fvm flutter build apk
+flutter build apk
 ```
 
 #### Build App Bundle for publishing
 
 ```
-fvm  flutter build appbundle
+flutter build appbundle
 ```
