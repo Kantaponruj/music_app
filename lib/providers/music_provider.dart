@@ -30,7 +30,10 @@ class MusicProvider with ChangeNotifier {
 
     try {
       _songs = await _musicService.getSongs();
-      _currentSong = _songs.first;
+      Track firstSong = _songs.first;
+      _currentSong = firstSong;
+      await audioPlayer.setAsset(firstSong.streamUrl.toString());
+      _duration = audioPlayer.duration ?? Duration.zero;
       debugPrint("Fetched songs: $_songs");
     } catch (e) {
       debugPrint("Error fetching music: $e");
